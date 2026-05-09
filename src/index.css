@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-main: #ffffff; /* White background for the board as in the latest screenshot */
+  --card-bg: #ebf1f9; /* The specific light blue for cards from the screenshot */
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --border-color: #d1d9e2;
+}
+
+* {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-main);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Modern & Subtle Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Kanban board horizontal scroll */
+.kanban-board {
+  display: flex;
+  gap: 28px;
+  padding: 32px 40px;
+  overflow-x: auto;
+  height: 100%;
+  align-items: flex-start;
+  scroll-behavior: smooth;
+}
+
+/* Column */
+.k-column {
+  display: flex;
+  flex-direction: column;
+  width: 310px;
+  min-width: 310px;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.k-column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px 18px 4px;
+}
+
+.k-column-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.k-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 4px;
+  overflow-y: auto;
+  min-height: 100px;
+  max-height: calc(100vh - 160px);
+  padding-bottom: 40px;
+}
+
+/* Task card - Matches the Blue from the screenshot perfectly */
+.k-card {
+  background: var(--card-bg);
+  border-radius: 18px;
+  box-shadow: none; /* No shadow in the reference screenshot for the cards themselves */
+  cursor: grab;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.k-card:hover {
+  transform: translateY(-2px);
+  background: #e2eaf3;
+  border-color: #cbd5e1;
+}
+
+.k-card-body {
+  padding: 22px;
+}
+
+.k-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+  text-transform: capitalize;
+}
+
+/* Label colors matching reference - they are light pills on blue cards */
+.k-label-feature { background: #dbeafe; color: #1e40af; }
+.k-label-bug     { background: #fee2e2; color: #991b1b; }
+.k-label-issue   { background: #ffedd5; color: #9a3412; }
+.k-label-undefined { background: #f1f5f9; color: #475569; }
+
+/* Progress Bar Container */
+.k-progress-container {
+  height: 6px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  margin-bottom: 22px;
+  overflow: hidden;
+}
+
+/* Progress Fill Colors */
+.k-progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.k-progress-fill-feature   { background: #3b82f6; }
+.k-progress-fill-bug       { background: #ef4444; }
+.k-progress-fill-issue     { background: #f59e0b; }
+.k-progress-fill-undefined { background: #94a3b8; }
+.k-progress-fill-success   { background: #10b981; }
+
+.k-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.55;
+  margin: 0 0 22px;
+  letter-spacing: -0.01em;
+}
+
+.k-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.k-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.k-avatars {
+  display: flex;
+  align-items: center;
+}
+
+.k-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid #ebf1f9; /* Matches card background */
+  object-fit: cover;
+  margin-left: -10px;
+  transition: transform 0.2s;
+}
+
+.k-avatar:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+.k-avatar:first-child {
+  margin-left: 0;
+}
+
+/* Drop indicator styling */
+.k-drop-indicator {
+  height: 4px;
+  background: #3b82f6;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+/* Premium Toast Notification */
+.k-toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  background: white;
+  padding: 14px 24px;
+  border-radius: 14px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1000;
+  border: 1px solid #f1f5f9;
+  animation: toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.k-toast-icon {
+  width: 22px;
+  height: 22px;
+  background: #10b981;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.k-toast-message {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+@keyframes toast-in {
+  from { transform: translateY(-20px) scale(0.95); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Modal sizing fix */
+.task-modal-root {
+  --width: 90vw;
+  --max-width: 1200px;
+  --height: 92vh;
+  --max-height: 900px;
+  --border-radius: 24px;
+}
+
+.task-modal-root::part(content) {
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Hide native date picker icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
+
+/* Ensure select doesn't show default arrow in IE/Edge */
+select::-ms-expand {
+  display: none;
+}
