@@ -3,7 +3,11 @@ import { IonModal } from "@ionic/react";
 import type { Task, Subtask, TaskLabel, Assignee } from "../../../types";
 import { Icons } from "./components/TaskModalIcons";
 import { LABELS, DUMMY_USERS } from "./TaskModalConstants";
-import { SectionLabel, InputWrapper, CustomSelect, CustomDatePicker } from "./components/TaskModalComponents";
+import {
+  SectionLabel,
+  CustomSelect,
+  CustomDatePicker,
+} from "./components/TaskModalComponents";
 
 interface TaskModalProps {
   isOpen: boolean;
@@ -132,12 +136,23 @@ const TaskModal: React.FC<TaskModalProps> = ({
             </span>{" "}
             Mark Complete
           </button>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-slate-400"
-          >
-            <Icons.Close />
-          </button>
+          <div className="flex items-center gap-2">
+            {task && (
+              <button
+                onClick={() => onDelete(task.id)}
+                className="p-2 hover:bg-red-50 hover:text-red-500 rounded-lg transition-all text-slate-400 group"
+                title="Delete Task"
+              >
+                <Icons.Trash />
+              </button>
+            )}
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-slate-100 rounded-lg transition-colors text-slate-400"
+            >
+              <Icons.Close />
+            </button>
+          </div>
         </header>
 
         <div className="flex-1 overflow-y-auto px-10 pt-8 pb-12">

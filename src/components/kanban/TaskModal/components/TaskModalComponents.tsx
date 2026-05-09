@@ -101,10 +101,12 @@ export const CustomDatePicker: React.FC<{
 }> = ({ value, onChange, icon }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const displayDate = value ? format(parseISO(value), "dd MMM, yyyy") : "Pick a date";
+  const displayDate = value
+    ? format(parseISO(value), "dd MMM, yyyy")
+    : "Pick a date";
 
   return (
-    <div 
+    <div
       className="relative group cursor-pointer"
       onClick={() => inputRef.current?.showPicker()}
     >
@@ -120,7 +122,7 @@ export const CustomDatePicker: React.FC<{
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="absolute inset-0 opacity-0 cursor-pointer"
-        style={{ width: '100%', height: '100%' }}
+        style={{ width: "100%", height: "100%" }}
       />
     </div>
   );
